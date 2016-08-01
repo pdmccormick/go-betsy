@@ -11,6 +11,8 @@ import (
 	"math"
 	"net"
 	"os"
+	"sort"
+	"time"
 )
 
 import _ "image/gif"
@@ -60,6 +62,28 @@ type MappedTile struct {
 type Display struct {
 	Net   *Network
 	Tiles []*MappedTile
+}
+
+type byRowColumn []*MappedTile
+
+func (s byRowColumn) Len() int {
+	return len(s)
+}
+
+func (s byRowColumn) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
+func (s byRowColumn) Less(i, j int) bool {
+	if s[i].Crop.Min.Y == s[j].Crop.Min.Y {
+		return s[i].Crop.Min.X < s[j].Crop.Min.X
+	}
+
+	return s[i].Crop.Min.Y < s[j].Crop.Min.Y
+}
+
+func (disp *Display) SortTiles() {
+	sort.Sort(byRowColumn(disp.Tiles))
 }
 
 func (disp *Display) AddTile(ip net.IP, cfg *TileConfig, startX, startY int) (*MappedTile, error) {
@@ -120,7 +144,9 @@ var DefaultPWMSettings = &PWMSettings{
 }
 
 func (disp *Display) SendFrame(img image.Image, settings *PWMSettings) error {
-	// TODO: Use channels to do this in parallel
+	start := time.Now()
+	defer log.Printf("Sent frame in %s", time.Since(start))
+
 	for _, tile := range disp.Tiles {
 		err := tile.ConvertFrame(img, tile.Crop, settings)
 		if err != nil {
@@ -282,6 +308,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	display.SortTiles()
 
 	settings := DefaultPWMSettings
 
