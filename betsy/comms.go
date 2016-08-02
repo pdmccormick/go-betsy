@@ -18,10 +18,16 @@ type Tile struct {
 }
 
 type Network struct {
-	Conn          *net.UDPConn
+	UnicastConn   *net.UDPConn
+	BroadcastConn *net.UDPConn
 	BroadcastAddr *net.UDPAddr
 	Interface     *net.Interface
 	CommandBuf    bytes.Buffer
+}
+
+func (network *Network) Close() {
+	network.UnicastConn.Close()
+	network.BroadcastConn.Close()
 }
 
 func (network *Network) MakeTile(ip net.IP) (*Tile, error) {
@@ -43,7 +49,7 @@ func (network *Network) BroadcastCommand(command string) error {
 	fmt.Fprintf(&network.CommandBuf, "%s", command)
 
 	// Transmit command
-	if _, err := network.Conn.WriteTo(network.CommandBuf.Bytes(), network.BroadcastAddr); err != nil {
+	if _, err := network.BroadcastConn.WriteTo(network.CommandBuf.Bytes(), network.BroadcastAddr); err != nil {
 		return err
 	}
 	return nil
@@ -66,23 +72,41 @@ func NetworkByInterfaceName(name string) (*Network, error) {
 		return nil, err
 	}
 
-	conn, err := net.ListenUDP("udp6", nil)
-	if err != nil {
-		return nil, err
+	unicastConn, err := net.ListenUDP("udp6", nil)
+	{
+		if err != nil {
+			return nil, err
+		}
+		f, err := unicastConn.File()
+		if err != nil {
+			return nil, err
+		}
+
+		err = syscall.BindToDevice(int(f.Fd()), dev.Name)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	f, err := conn.File()
-	if err != nil {
-		return nil, err
-	}
+	broadcastConn, err := net.ListenUDP("udp6", nil)
+	{
+		if err != nil {
+			return nil, err
+		}
+		f, err := broadcastConn.File()
+		if err != nil {
+			return nil, err
+		}
 
-	err = syscall.BindToDevice(int(f.Fd()), dev.Name)
-	if err != nil {
-		return nil, err
+		err = syscall.BindToDevice(int(f.Fd()), dev.Name)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return &Network{
-		Conn:          conn,
+		UnicastConn:   unicastConn,
+		BroadcastConn: broadcastConn,
 		BroadcastAddr: baddr,
 		Interface:     dev,
 	}, nil
@@ -104,7 +128,7 @@ func (tile *Tile) SendFrameBuffer(frame []byte) error {
 		}
 
 		// Transmit command
-		if _, err := tile.Net.Conn.WriteTo(tile.CommandBuf.Bytes(), tile.Addr); err != nil {
+		if _, err := tile.Net.UnicastConn.WriteTo(tile.CommandBuf.Bytes(), tile.Addr); err != nil {
 			return err
 		}
 	}

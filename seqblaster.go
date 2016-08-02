@@ -36,7 +36,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer network.Conn.Close()
+	defer network.Close()
 
 	// Create display
 	display := &betsy.Display{Net: network}
