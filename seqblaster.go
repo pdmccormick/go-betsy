@@ -88,6 +88,8 @@ func main() {
 			log.Printf("%d/%d/%d: Sent frame in %s", j, i, n, time.Since(now))
 			i += 1
 
+			display.Net.UploadFrame()
+
 			if i >= n {
 				break
 			}

@@ -56,8 +56,6 @@ func (disp *Display) SendFrame(img *image.RGBA, settings *PWMSettings) error {
 		}
 	}
 
-	disp.Net.UploadFrame()
-
 	return nil
 }
 
