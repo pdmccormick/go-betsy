@@ -61,12 +61,13 @@ func NetworkByInterfaceName(name string) (*Network, error) {
 	}, nil
 }
 
-func (tile *Tile) SendFrameBuffer() error {
+func (tile *Tile) SendFrameBuffer(frame []byte) error {
 	// Break frame buffer into chunks and send individually
 	const FRAME_CHUNK_SIZE = 1024
-	for offs := 0; tile.FrameBuf.Len() > 0; offs += FRAME_CHUNK_SIZE {
+	buf := bytes.NewBuffer(frame)
+	for offs := 0; buf.Len() > 0; offs += FRAME_CHUNK_SIZE {
 		// Extract next chunk of the frame
-		chunk := tile.FrameBuf.Next(FRAME_CHUNK_SIZE)
+		chunk := buf.Next(FRAME_CHUNK_SIZE)
 
 		// Pack chunk into the command buffer
 		tile.CommandBuf.Reset()

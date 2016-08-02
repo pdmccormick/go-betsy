@@ -4,14 +4,13 @@ import (
 	"encoding/binary"
 	"image"
 	"image/color"
-	"io"
-	"log"
 	"math"
-	"time"
 )
 
 const TILE_WIDTH = 18
 const TILE_HEIGHT = 18
+const BYTES_PER_PIXEL = 3 * 2
+const FRAME_BUFFER_SIZE = BYTES_PER_PIXEL * TILE_WIDTH * TILE_HEIGHT
 
 type Matrix3x3 [3][3]float32
 
@@ -30,16 +29,12 @@ var DefaultPWMSettings = &PWMSettings{
 }
 
 func (disp *Display) SendFrame(img image.Image, settings *PWMSettings) error {
-	start := time.Now()
-	defer log.Printf("Sent frame in %s", time.Since(start))
+	buf := make([]byte, FRAME_BUFFER_SIZE)
 
 	for _, m := range disp.Mapping {
-		err := m.Tile.ConvertFrame(img, m.Crop, settings)
-		if err != nil {
-			return err
-		}
+		settings.ConvertFrame(img, m.Crop, buf)
 
-		err = m.Tile.SendFrameBuffer()
+		err := m.Tile.SendFrameBuffer(buf)
 		if err != nil {
 			return err
 		}
@@ -48,37 +43,21 @@ func (disp *Display) SendFrame(img image.Image, settings *PWMSettings) error {
 	return nil
 }
 
-func (tile *Tile) ConvertFrame(img image.Image, bounds image.Rectangle, settings *PWMSettings) error {
-	// Transform image to PWM space and pack into framebuffer
-	tile.FrameBuf.Reset()
-	if err := settings.ConvertFrame(img, bounds, &tile.FrameBuf); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (settings *PWMSettings) ConvertFrame(img image.Image, bounds image.Rectangle, w io.Writer) error {
+func (settings *PWMSettings) ConvertFrame(img image.Image, bounds image.Rectangle, buf []byte) {
+	i := 0
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 			pix := img.At(x, y)
 			pwm := settings.ConvertPixel(pix)
 
-			if err := binary.Write(w, binary.LittleEndian, pwm.R); err != nil {
-				return err
-			}
-
-			if err := binary.Write(w, binary.LittleEndian, pwm.G); err != nil {
-				return err
-			}
-
-			if err := binary.Write(w, binary.LittleEndian, pwm.B); err != nil {
-				return err
-			}
+			binary.LittleEndian.PutUint16(buf[i:i+2], pwm.R)
+			i += 2
+			binary.LittleEndian.PutUint16(buf[i:i+2], pwm.G)
+			i += 2
+			binary.LittleEndian.PutUint16(buf[i:i+2], pwm.B)
+			i += 2
 		}
 	}
-
-	return nil
 }
 
 func (c *PWMSettings) ConvertPixel(pix color.Color) color.RGBA64 {
