@@ -120,9 +120,15 @@ func (tile *Tile) SendFrameBuffer(frame []byte) error {
 		// Extract next chunk of the frame
 		chunk := buf.Next(FRAME_CHUNK_SIZE)
 
-		// Pack chunk into the command buffer
 		tile.CommandBuf.Reset()
-		fmt.Fprintf(&tile.CommandBuf, "dpc data %d;", offs)
+
+		// Pack text command into buffer
+		command := fmt.Sprintf("dpc data %d;", offs)
+		if _, err := tile.CommandBuf.Write([]byte(command)); err != nil {
+			return err
+		}
+
+		// Pack binary payload into buffer
 		if _, err := tile.CommandBuf.Write(chunk); err != nil {
 			return err
 		}
