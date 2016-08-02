@@ -10,6 +10,7 @@ type Inventory struct {
 	Tilemap []struct {
 		IpLinkLocal string    `json:"ipv6_link_local"`
 		Start       []float64 `json:"start"`
+		Ignore      string    `json:"ignore"`
 	} `json:"tilemap"`
 }
 
@@ -26,6 +27,10 @@ func LoadTilemapInventory(filename string, disp *Display) error {
 	}
 
 	for _, tilemap := range inv.Tilemap {
+		if tilemap.Ignore == "true" {
+			continue
+		}
+
 		ip := net.ParseIP(tilemap.IpLinkLocal)
 		tile, err := disp.Net.MakeTile(ip)
 		if err != nil {

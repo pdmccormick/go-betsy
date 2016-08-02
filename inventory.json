@@ -414,7 +414,9 @@
       "stop": [
         18,
         108
-      ]
+      ],
+      "ignore": "true",
+      "comment": "disconnected module in lower left corner"
     },
     {
       "ipv6_link_local": "fe80::204:a3ff:fe1b:91c2",
