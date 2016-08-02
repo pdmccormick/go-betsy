@@ -22,6 +22,7 @@ var framerate = flag.Int("R", 30, "framerate")
 var postscaler = flag.Float64("P", 0.5, "postscaler")
 var start_index = flag.Int("S", 1, "start index (default: 1)")
 var stop_index = flag.Int("N", -1, "stop index")
+var max_frames = flag.Int("M", -1, "maximum number of frames")
 
 func main() {
 	flag.Parse()
@@ -76,6 +77,8 @@ func main() {
 
 	period := time.Second / time.Duration(*framerate)
 	c := time.Tick(period)
+	num_frames := 0
+Loop:
 	for j := 0; ; j++ {
 		i, n := 0, len(images)
 		for now := range c {
@@ -85,10 +88,15 @@ func main() {
 				log.Fatal(err)
 				os.Exit(1)
 			}
-			log.Printf("%d/%d/%d: Sent frame in %s", j, i, n, time.Since(now))
+			log.Printf("%d/%d/%d: Sent frame in %s", j, i+1, n, time.Since(now))
 			i += 1
 
 			display.Net.UploadFrame()
+			num_frames++
+
+			if *max_frames > 0 && num_frames >= *max_frames {
+				break Loop
+			}
 
 			if i >= n {
 				break
