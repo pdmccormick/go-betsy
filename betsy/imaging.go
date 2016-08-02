@@ -20,12 +20,28 @@ type PWMSettings struct {
 	Gamma      float64
 	Postscaler float32
 	Transform  Matrix3x3
+	GammaLUT   [256]float32
+}
+
+func (settings *PWMSettings) SetGamma(gamma float64) {
+	settings.Gamma = gamma
+
+	const N = 255
+	const Nf float64 = float64(N)
+	for i := 0; i <= N; i++ {
+		f := float64(i) / Nf
+		settings.GammaLUT[i] = float32(math.Pow(f, gamma))
+	}
 }
 
 var DefaultPWMSettings = &PWMSettings{
 	Gamma:      2.4,
 	Postscaler: 1.0,
 	Transform:  Identity3x3,
+}
+
+func init() {
+	DefaultPWMSettings.SetGamma(DefaultPWMSettings.Gamma)
 }
 
 func (disp *Display) SendFrame(img image.Image, settings *PWMSettings) error {
@@ -61,19 +77,16 @@ func (settings *PWMSettings) ConvertFrame(img image.Image, bounds image.Rectangl
 }
 
 func (c *PWMSettings) ConvertPixel(pix color.Color) color.RGBA64 {
-	// F: Range into [0, 1]
-	const RGBA_FULL_SCALE float64 = 65535.0
-
 	Ri, Gi, Bi, _ := pix.RGBA()
 
-	Rf := float64(Ri) / RGBA_FULL_SCALE
-	Gf := float64(Gi) / RGBA_FULL_SCALE
-	Bf := float64(Bi) / RGBA_FULL_SCALE
+	// N (narrow): Range from [0, 65535] into [0, 255]
+	const f uint32 = 65535 / 255
+	Rn, Gn, Bn := Ri/f, Gi/f, Bi/f
 
 	// G: Apply gamma exponentiation
-	Rg := float32(math.Pow(Rf, c.Gamma))
-	Gg := float32(math.Pow(Gf, c.Gamma))
-	Bg := float32(math.Pow(Bf, c.Gamma))
+	Rg := c.GammaLUT[Rn]
+	Gg := c.GammaLUT[Gn]
+	Bg := c.GammaLUT[Bn]
 
 	// M: Apply channel transformation
 	M := &c.Transform
