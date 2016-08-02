@@ -44,7 +44,7 @@ func init() {
 	DefaultPWMSettings.SetGamma(DefaultPWMSettings.Gamma)
 }
 
-func (disp *Display) SendFrame(img image.Image, settings *PWMSettings) error {
+func (disp *Display) SendFrame(img *image.RGBA, settings *PWMSettings) error {
 	buf := make([]byte, FRAME_BUFFER_SIZE)
 
 	for _, m := range disp.Mapping {
@@ -61,11 +61,11 @@ func (disp *Display) SendFrame(img image.Image, settings *PWMSettings) error {
 	return nil
 }
 
-func (settings *PWMSettings) ConvertFrame(img image.Image, bounds image.Rectangle, buf []byte) {
+func (settings *PWMSettings) ConvertFrame(img *image.RGBA, bounds image.Rectangle, buf []byte) {
 	i := 0
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			pix := img.At(x, y)
+			pix := img.RGBAAt(x, y)
 			pwm := settings.ConvertPixel(pix)
 
 			binary.LittleEndian.PutUint16(buf[i:i+2], pwm.R)
@@ -78,17 +78,11 @@ func (settings *PWMSettings) ConvertFrame(img image.Image, bounds image.Rectangl
 	}
 }
 
-func (c *PWMSettings) ConvertPixel(pix color.Color) color.RGBA64 {
-	Ri, Gi, Bi, _ := pix.RGBA()
-
-	// N (narrow): Range from [0, 65535] into [0, 255]
-	const f uint32 = 65535 / 255
-	Rn, Gn, Bn := Ri/f, Gi/f, Bi/f
-
+func (c *PWMSettings) ConvertPixel(pix color.RGBA) color.RGBA64 {
 	// G: Apply gamma exponentiation
-	Rg := c.GammaLUT[Rn]
-	Gg := c.GammaLUT[Gn]
-	Bg := c.GammaLUT[Bn]
+	Rg := c.GammaLUT[pix.R]
+	Gg := c.GammaLUT[pix.G]
+	Bg := c.GammaLUT[pix.B]
 
 	// M: Apply channel transformation
 	M := &c.Transform

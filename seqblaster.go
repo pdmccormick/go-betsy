@@ -53,7 +53,7 @@ func main() {
 	settings.Postscaler = float32(*postscaler)
 
 	// Load image sequence
-	var images []image.Image
+	var images []*image.RGBA
 
 	for i := *start_index; i <= *stop_index; i++ {
 		filename := fmt.Sprintf(*image_fmt, i)
@@ -71,7 +71,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		images = append(images, img)
+		images = append(images, img.(*image.RGBA))
 	}
 
 	period := time.Second / time.Duration(*framerate)
