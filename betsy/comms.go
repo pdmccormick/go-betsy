@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"net"
+	"syscall"
 )
 
 const PROTOCOL_PORT = 48757
@@ -24,7 +25,7 @@ type Network struct {
 }
 
 func (network *Network) MakeTile(ip net.IP) (*Tile, error) {
-	addr, err := net.ResolveUDPAddr("udp6", fmt.Sprintf("[%s%%%s]:%d", ip.String(), network.Interface.Name, PROTOCOL_PORT))
+	addr, err := net.ResolveUDPAddr("udp6", fmt.Sprintf("[%s]:%d", ip.String(), PROTOCOL_PORT))
 	if err != nil {
 		return nil, err
 	}
@@ -60,12 +61,22 @@ func NetworkByInterfaceName(name string) (*Network, error) {
 		return nil, err
 	}
 
-	baddr, err := net.ResolveUDPAddr("udp6", fmt.Sprintf("[%s%%%s]:%d", IPV6_ALL_NODES_MULTICAST_ADDRESS, dev.Name, PROTOCOL_PORT))
+	baddr, err := net.ResolveUDPAddr("udp6", fmt.Sprintf("[%s]:%d", IPV6_ALL_NODES_MULTICAST_ADDRESS, PROTOCOL_PORT))
 	if err != nil {
 		return nil, err
 	}
 
 	conn, err := net.ListenUDP("udp6", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	f, err := conn.File()
+	if err != nil {
+		return nil, err
+	}
+
+	err = syscall.BindToDevice(int(f.Fd()), dev.Name)
 	if err != nil {
 		return nil, err
 	}
