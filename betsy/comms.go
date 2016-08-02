@@ -20,6 +20,7 @@ type Network struct {
 	Conn          *net.UDPConn
 	BroadcastAddr *net.UDPAddr
 	Interface     *net.Interface
+	CommandBuf    bytes.Buffer
 }
 
 func (network *Network) MakeTile(ip net.IP) (*Tile, error) {
@@ -34,6 +35,21 @@ func (network *Network) MakeTile(ip net.IP) (*Tile, error) {
 		Addr: addr,
 	}
 	return tile, nil
+}
+
+func (network *Network) BroadcastCommand(command string) error {
+	network.CommandBuf.Reset()
+	fmt.Fprintf(&network.CommandBuf, "%s", command)
+
+	// Transmit command
+	if _, err := network.Conn.WriteTo(network.CommandBuf.Bytes(), network.BroadcastAddr); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (network *Network) UploadFrame() error {
+	return network.BroadcastCommand("dpc upload;")
 }
 
 func NetworkByInterfaceName(name string) (*Network, error) {
