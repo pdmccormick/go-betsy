@@ -7,6 +7,10 @@ import (
 	"math"
 )
 
+import _ "image/gif"
+import _ "image/png"
+import _ "image/jpeg"
+
 const TILE_WIDTH = 18
 const TILE_HEIGHT = 18
 const BYTES_PER_PIXEL = 3 * 2

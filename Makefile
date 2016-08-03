@@ -1,9 +1,12 @@
 .PHONY: all run clean
 
-all: seqblaster
+all: seqblaster webcontrol
 
-seqblaster: seqblaster.go
-	go build $^
+seqblaster: seqblaster.go betsy/*.go
+	go build -o $@ $<
+
+webcontrol: webcontrol.go betsy/*.go
+	go build -o $@ $<
 
 clean:
 	rm -f seqblaster

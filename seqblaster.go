@@ -10,10 +10,6 @@ import (
 	"time"
 )
 
-import _ "image/gif"
-import _ "image/png"
-import _ "image/jpeg"
-
 var ifname = flag.String("I", "", "interface name")
 var image_fmt = flag.String("F", "", "image path format")
 var inv_file = flag.String("T", "", "tilemap inventory JSON file")
