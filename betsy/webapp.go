@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gocraft/web"
+	"image"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -59,17 +61,7 @@ func (c *Context) SettingsList(rw web.ResponseWriter, req *web.Request) {
 }
 
 func (c *Context) SettingsUpdate(rw web.ResponseWriter, req *web.Request) {
-	if p := req.FormValue("gamma"); p != "" {
-		if val, err := strconv.ParseFloat(p, 64); err == nil {
-			c.app.Settings.SetGamma(val)
-		}
-	}
-
-	if p := req.FormValue("brightness"); p != "" {
-		if val, err := strconv.ParseFloat(p, 64); err == nil {
-			c.app.Settings.Postscaler = float32(val)
-		}
-	}
+	UpdatePWMSettingsFromRequest(&c.app.Settings, req)
 
 	if p := req.FormValue("max_brightness"); p != "" {
 		if val, err := strconv.ParseFloat(p, 64); err == nil {
@@ -77,15 +69,32 @@ func (c *Context) SettingsUpdate(rw web.ResponseWriter, req *web.Request) {
 		}
 	}
 
+	c.SettingsList(rw, req)
+
+}
+
+func UpdatePWMSettingsFromRequest(settings *PWMSettings, req *web.Request) {
+	if p := req.FormValue("gamma"); p != "" {
+		if val, err := strconv.ParseFloat(p, 64); err == nil {
+			settings.SetGamma(val)
+		}
+	}
+
+	if p := req.FormValue("brightness"); p != "" {
+		if val, err := strconv.ParseFloat(p, 64); err == nil {
+			settings.Postscaler = float32(val)
+		}
+	}
+
 	// Accept `?transform=id` or `?transform=[[1,0,0],[0,1,0],[0,0,1]]`
 	if p := req.FormValue("transform"); p != "" {
 		if p == "id" {
-			c.app.Settings.Transform = Identity3x3
+			settings.Transform = Identity3x3
 		} else {
 			var transform [3][3]float32
 			err := json.Unmarshal([]byte(p), &transform)
 			if err == nil {
-				c.app.Settings.Transform = Matrix3x3(transform)
+				settings.Transform = Matrix3x3(transform)
 			}
 		}
 	}
@@ -96,7 +105,7 @@ func (c *Context) SettingsUpdate(rw web.ResponseWriter, req *web.Request) {
 			field := fmt.Sprintf("transform[%d][%d]", row, col)
 			if p := req.FormValue(field); p != "" {
 				if val, err := strconv.ParseFloat(p, 64); err == nil {
-					c.app.Settings.Transform[row][col] = float32(val)
+					settings.Transform[row][col] = float32(val)
 				}
 			}
 		}
@@ -106,12 +115,10 @@ func (c *Context) SettingsUpdate(rw web.ResponseWriter, req *web.Request) {
 			var vector [3]float32
 			err := json.Unmarshal([]byte(p), &vector)
 			if err == nil {
-				c.app.Settings.Transform[row] = vector
+				settings.Transform[row] = vector
 			}
 		}
 	}
-
-	c.SettingsList(rw, req)
 }
 
 func (c *Context) SettingsReset(rw web.ResponseWriter, req *web.Request) {
@@ -119,6 +126,34 @@ func (c *Context) SettingsReset(rw web.ResponseWriter, req *web.Request) {
 	c.app.MaxPostscaler = DEFAULT_MAX_POSTSCALER
 
 	c.SettingsList(rw, req)
+}
+
+func (c *Context) FrameUpdate(rw web.ResponseWriter, req *web.Request) {
+	settings := c.app.Settings
+	UpdatePWMSettingsFromRequest(&settings, req)
+
+	if settings.Postscaler > c.app.MaxPostscaler {
+		settings.Postscaler = c.app.MaxPostscaler
+	}
+
+	file, _, err := req.FormFile("data")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	img0, _, err := image.Decode(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	img := img0.(*image.RGBA)
+
+	err = c.app.Display.SendFrame(img, &settings)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	c.app.Display.Net.UploadFrame()
 }
 
 func MakeWebApp(ifname string) (*WebApp, error) {
@@ -144,7 +179,8 @@ func MakeWebApp(ifname string) (*WebApp, error) {
 		Middleware(web.ShowErrorsMiddleware).
 		Get("/settings", (*Context).SettingsList).
 		Post("/settings", (*Context).SettingsUpdate).
-		Post("/settings/reset", (*Context).SettingsReset)
+		Post("/settings/reset", (*Context).SettingsReset).
+		Post("/frame", (*Context).FrameUpdate)
 
 	return app, nil
 }
