@@ -148,12 +148,13 @@ func (c *Context) FrameUpdate(rw web.ResponseWriter, req *web.Request) {
 
 	img := img0.(*image.RGBA)
 
-	err = c.app.Display.SendFrame(img, &settings)
+	const buf_i = 0
+	err = c.app.Display.SendFrame(buf_i, img, &settings)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	c.app.Display.Net.UploadFrame()
+	c.app.Display.Net.UploadFrame(buf_i)
 }
 
 func MakeWebApp(ifname string) (*WebApp, error) {

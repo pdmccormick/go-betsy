@@ -48,13 +48,13 @@ func init() {
 	DefaultPWMSettings.SetGamma(DefaultPWMSettings.Gamma)
 }
 
-func (disp *Display) SendFrame(img *image.RGBA, settings *PWMSettings) error {
+func (disp *Display) SendFrame(buf_i int, img *image.RGBA, settings *PWMSettings) error {
 	buf := make([]byte, FRAME_BUFFER_SIZE)
 
 	for _, m := range disp.Mapping {
 		settings.ConvertFrame(img, m.Crop, buf)
 
-		err := m.Tile.SendFrameBuffer(buf)
+		err := m.Tile.SendFrameBuffer(buf_i, buf)
 		if err != nil {
 			return err
 		}

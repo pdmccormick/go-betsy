@@ -74,12 +74,13 @@ func main() {
 	period := time.Second / time.Duration(*framerate)
 	c := time.Tick(period)
 	num_frames := 0
+	const buf_i = 0
 Loop:
 	for j := 0; ; j++ {
 		i, n := 0, len(images)
 		for now := range c {
 			img := images[i]
-			err = display.SendFrame(img, &settings)
+			err = display.SendFrame(buf_i, img, &settings)
 			if err != nil {
 				log.Fatal(err)
 				os.Exit(1)
@@ -87,7 +88,7 @@ Loop:
 			log.Printf("%d/%d/%d: Sent frame in %s", j, i+1, n, time.Since(now))
 			i += 1
 
-			display.Net.UploadFrame()
+			display.Net.UploadFrame(buf_i)
 			num_frames++
 
 			if *max_frames > 0 && num_frames >= *max_frames {

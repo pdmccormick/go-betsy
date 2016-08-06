@@ -55,8 +55,8 @@ func (network *Network) BroadcastCommand(command string) error {
 	return nil
 }
 
-func (network *Network) UploadFrame() error {
-	return network.BroadcastCommand("dpc! upload;")
+func (network *Network) UploadFrame(buf_i int) error {
+	return network.BroadcastCommand(fmt.Sprintf("dpc! upload %d;", buf_i))
 }
 
 func NetworkByInterfaceName(name string) (*Network, error) {
@@ -112,7 +112,7 @@ func NetworkByInterfaceName(name string) (*Network, error) {
 	}, nil
 }
 
-func (tile *Tile) SendFrameBuffer(frame []byte) error {
+func (tile *Tile) SendFrameBuffer(buf_i int, frame []byte) error {
 	// Break frame buffer into chunks and send individually
 	const FRAME_CHUNK_SIZE = 1024
 	buf := bytes.NewBuffer(frame)
@@ -123,7 +123,7 @@ func (tile *Tile) SendFrameBuffer(frame []byte) error {
 		tile.CommandBuf.Reset()
 
 		// Pack text command into buffer
-		command := fmt.Sprintf("dpc! data %d;", offs)
+		command := fmt.Sprintf("dpc! data %d %d;", buf_i, offs)
 		if _, err := tile.CommandBuf.Write([]byte(command)); err != nil {
 			return err
 		}
