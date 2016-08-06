@@ -9,4 +9,4 @@ webcontrol: webcontrol.go betsy/*.go
 	go build -o $@ $<
 
 clean:
-	rm -f seqblaster
+	rm -f seqblaster webcontrol
