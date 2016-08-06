@@ -178,10 +178,10 @@ func MakeWebApp(ifname string) (*WebApp, error) {
 		Middleware(app.setAppContext()).
 		Middleware(web.LoggerMiddleware).
 		Middleware(web.ShowErrorsMiddleware).
-		Get("/settings", (*Context).SettingsList).
-		Post("/settings", (*Context).SettingsUpdate).
-		Post("/settings/reset", (*Context).SettingsReset).
-		Post("/frame", (*Context).FrameUpdate)
+		Get("/api/v1/settings", (*Context).SettingsList).
+		Post("/api/v1/settings", (*Context).SettingsUpdate).
+		Post("/api/v1/settings/reset", (*Context).SettingsReset).
+		Post("/api/v1/frame", (*Context).FrameUpdate)
 
 	return app, nil
 }
