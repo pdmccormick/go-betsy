@@ -327,7 +327,7 @@
   ],
   "tilemap": [
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9334",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91cc",
       "size": [
         18,
         18
@@ -342,7 +342,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c1",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9325",
       "size": [
         18,
         18
@@ -357,7 +357,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:901a",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:900b",
       "size": [
         18,
         18
@@ -372,7 +372,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:932b",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c6",
       "size": [
         18,
         18
@@ -387,7 +387,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c4",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9330",
       "size": [
         18,
         18
@@ -402,7 +402,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9324",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91b6",
       "size": [
         18,
         18
@@ -414,12 +414,10 @@
       "stop": [
         18,
         108
-      ],
-      "ignore": "true",
-      "comment": "disconnected module in lower left corner"
+      ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c2",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91d3",
       "size": [
         18,
         18
@@ -434,7 +432,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91b8",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91b5",
       "size": [
         18,
         18
@@ -449,7 +447,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c6",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91b9",
       "size": [
         18,
         18
@@ -464,7 +462,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9329",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91ce",
       "size": [
         18,
         18
@@ -479,7 +477,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91cf",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9323",
       "size": [
         18,
         18
@@ -509,7 +507,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91ba",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91bd",
       "size": [
         18,
         18
@@ -524,7 +522,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9330",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c3",
       "size": [
         18,
         18
@@ -536,51 +534,6 @@
       "stop": [
         54,
         36
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91d0",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        36,
-        36
-      ],
-      "stop": [
-        54,
-        54
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9323",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        36,
-        54
-      ],
-      "stop": [
-        54,
-        72
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:933f",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        36,
-        72
-      ],
-      "stop": [
-        54,
-        90
       ]
     },
     {
@@ -591,6 +544,51 @@
       ],
       "start": [
         36,
+        36
+      ],
+      "stop": [
+        54,
+        54
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91d2",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        36,
+        54
+      ],
+      "stop": [
+        54,
+        72
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c9",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        36,
+        72
+      ],
+      "stop": [
+        54,
+        90
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91cf",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        36,
         90
       ],
       "stop": [
@@ -599,7 +597,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91e1",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9319",
       "size": [
         18,
         18
@@ -614,7 +612,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91b5",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91db",
       "size": [
         18,
         18
@@ -629,7 +627,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c3",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c8",
       "size": [
         18,
         18
@@ -644,7 +642,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9332",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91d9",
       "size": [
         18,
         18
@@ -659,7 +657,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:932e",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:901a",
       "size": [
         18,
         18
@@ -674,7 +672,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91d3",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91ba",
       "size": [
         18,
         18
@@ -686,36 +684,6 @@
       "stop": [
         72,
         108
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9338",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        72,
-        0
-      ],
-      "stop": [
-        90,
-        18
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c0",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        72,
-        18
-      ],
-      "stop": [
-        90,
-        36
       ]
     },
     {
@@ -726,6 +694,36 @@
       ],
       "start": [
         72,
+        0
+      ],
+      "stop": [
+        90,
+        18
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9338",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        72,
+        18
+      ],
+      "stop": [
+        90,
+        36
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c7",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        72,
         36
       ],
       "stop": [
@@ -734,7 +732,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91dd",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9316",
       "size": [
         18,
         18
@@ -749,7 +747,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9022",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:932b",
       "size": [
         18,
         18
@@ -764,7 +762,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9319",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9329",
       "size": [
         18,
         18
@@ -779,7 +777,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:900b",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91ca",
       "size": [
         18,
         18
@@ -809,7 +807,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c7",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9337",
       "size": [
         18,
         18
@@ -820,6 +818,96 @@
       ],
       "stop": [
         108,
+        54
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:932e",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        90,
+        54
+      ],
+      "stop": [
+        108,
+        72
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c4",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        90,
+        72
+      ],
+      "stop": [
+        108,
+        90
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91d0",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        90,
+        90
+      ],
+      "stop": [
+        108,
+        108
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91dd",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        108,
+        0
+      ],
+      "stop": [
+        126,
+        18
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91e1",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        108,
+        18
+      ],
+      "stop": [
+        126,
+        36
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:933f",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        108,
+        36
+      ],
+      "stop": [
+        126,
         54
       ]
     },
@@ -830,96 +918,6 @@
         18
       ],
       "start": [
-        90,
-        54
-      ],
-      "stop": [
-        108,
-        72
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91cc",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        90,
-        72
-      ],
-      "stop": [
-        108,
-        90
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9325",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        90,
-        90
-      ],
-      "stop": [
-        108,
-        108
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91bd",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        108,
-        0
-      ],
-      "stop": [
-        126,
-        18
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91bb",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        108,
-        18
-      ],
-      "stop": [
-        126,
-        36
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91b9",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        108,
-        36
-      ],
-      "stop": [
-        126,
-        54
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:93dd",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
         108,
         54
       ],
@@ -929,7 +927,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9316",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91b8",
       "size": [
         18,
         18
@@ -944,7 +942,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91d9",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:932c",
       "size": [
         18,
         18
@@ -955,96 +953,6 @@
       ],
       "stop": [
         126,
-        108
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91db",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        126,
-        0
-      ],
-      "stop": [
-        144,
-        18
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91ca",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        126,
-        18
-      ],
-      "stop": [
-        144,
-        36
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c8",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        126,
-        36
-      ],
-      "stop": [
-        144,
-        54
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9337",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        126,
-        54
-      ],
-      "stop": [
-        144,
-        72
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91d2",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        126,
-        72
-      ],
-      "stop": [
-        144,
-        90
-      ]
-    },
-    {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91ce",
-      "size": [
-        18,
-        18
-      ],
-      "start": [
-        126,
-        90
-      ],
-      "stop": [
-        144,
         108
       ]
     },
@@ -1055,6 +963,96 @@
         18
       ],
       "start": [
+        126,
+        0
+      ],
+      "stop": [
+        144,
+        18
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9332",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        126,
+        18
+      ],
+      "stop": [
+        144,
+        36
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c0",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        126,
+        36
+      ],
+      "stop": [
+        144,
+        54
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9022",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        126,
+        54
+      ],
+      "stop": [
+        144,
+        72
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c2",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        126,
+        72
+      ],
+      "stop": [
+        144,
+        90
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9334",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
+        126,
+        90
+      ],
+      "stop": [
+        144,
+        108
+      ]
+    },
+    {
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9324",
+      "size": [
+        18,
+        18
+      ],
+      "start": [
         144,
         0
       ],
@@ -1064,7 +1062,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:932c",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91ed",
       "size": [
         18,
         18
@@ -1079,7 +1077,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:9009",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91bb",
       "size": [
         18,
         18
@@ -1094,7 +1092,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91ed",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:93dd",
       "size": [
         18,
         18
@@ -1109,7 +1107,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c9",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:91c1",
       "size": [
         18,
         18
@@ -1124,7 +1122,7 @@
       ]
     },
     {
-      "ipv6_link_local": "fe80::204:a3ff:fe1b:91b6",
+      "ipv6_link_local": "fe80::204:a3ff:fe1b:9009",
       "size": [
         18,
         18
