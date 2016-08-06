@@ -14,7 +14,7 @@ var ifname = flag.String("I", "", "interface name")
 var image_fmt = flag.String("F", "", "image path format")
 var inv_file = flag.String("T", "", "tilemap inventory JSON file")
 var gamma = flag.Float64("G", 2.4, "gamma")
-var framerate = flag.Int("R", 30, "framerate")
+var framerate = flag.Float64("R", 10, "framerate")
 var postscaler = flag.Float64("P", 0.5, "postscaler")
 var start_index = flag.Int("S", 1, "start index (default: 1)")
 var stop_index = flag.Int("N", -1, "stop index")
@@ -71,7 +71,8 @@ func main() {
 		images = append(images, img.(*image.RGBA))
 	}
 
-	period := time.Second / time.Duration(*framerate)
+	fperiod_ms := (1.0 / *framerate) * 1000.0
+	period := time.Millisecond * time.Duration(fperiod_ms)
 	c := time.Tick(period)
 	num_frames := 0
 	const buf_i = 0
