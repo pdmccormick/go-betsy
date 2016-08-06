@@ -56,7 +56,7 @@ func (network *Network) BroadcastCommand(command string) error {
 }
 
 func (network *Network) UploadFrame() error {
-	return network.BroadcastCommand("dpc upload;")
+	return network.BroadcastCommand("dpc! upload;")
 }
 
 func NetworkByInterfaceName(name string) (*Network, error) {
@@ -123,7 +123,7 @@ func (tile *Tile) SendFrameBuffer(frame []byte) error {
 		tile.CommandBuf.Reset()
 
 		// Pack text command into buffer
-		command := fmt.Sprintf("dpc data %d;", offs)
+		command := fmt.Sprintf("dpc! data %d;", offs)
 		if _, err := tile.CommandBuf.Write([]byte(command)); err != nil {
 			return err
 		}
